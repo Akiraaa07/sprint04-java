@@ -1,0 +1,72 @@
+trigger:
+  branches:
+    include:
+      - main
+      - master
+      - release
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  rm: rm554227
+  resourceGroup: rg-webapp-sprint4
+  servicePlan: plan-webapp-sprint4
+  appName: webapp-sprint4
+  location: eastus2
+  runtime: JAVA:17-java17
+  artifactName: sprint03
+
+stages:
+  - stage: CriarInfra
+    jobs:
+      - job: infraestrutura
+        steps:
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'MyAzureSubscription'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az group create --name $(resourceGroup) --location $(location)
+                az appservice plan create --name $(servicePlan) --resource-group $(resourceGroup) --sku FREE --is-linux
+                az webapp create --resource-group $(resourceGroup) --plan $(servicePlan) --name $(appName) --runtime "$(runtime)"
+
+  - stage: Build
+    jobs:
+      - job: build
+        steps:
+          - task: Gradle@3
+            inputs:
+              gradleWrapperFile: 'gradlew'
+              tasks: 'build'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.17'
+              publishJUnitResults: false
+
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
+              Contents: '*.jar'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: $(artifactName)
+
+  - stage: Deploy
+    jobs:
+      - job: deploy
+        steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: current
+              downloadPath: '$(System.ArtifactsDirectory)'
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'MyAzureSubscription'
+              appType: webAppLinux
+              appName: $(appName)
+              package: '$(System.ArtifactsDirectory)/$(artifactName)/*.jar'
