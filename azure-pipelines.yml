@@ -30,9 +30,10 @@ stages:
               inlineScript: |
                 az group create --name $(resourceGroup) --location $(location)
                 az appservice plan create --name $(servicePlan) --resource-group $(resourceGroup) --sku FREE --is-linux
-                az webapp create --resource-group $(resourceGroup) --plan $(servicePlan) --name $(appName) --runtime "$(runtime)"
+                # az webapp create --> Removido pois já foi criado
 
   - stage: Build
+    dependsOn: CriarInfra
     jobs:
       - job: build
         steps:
@@ -56,6 +57,7 @@ stages:
               ArtifactName: $(artifactName)
 
   - stage: Deploy
+    dependsOn: Build
     jobs:
       - job: deploy
         steps:
