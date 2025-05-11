@@ -15,7 +15,7 @@ variables:
   appName: webapp-sprint4
   location: eastus2
   runtime: JAVA:17-java17
-  artifactName: sprint03
+  artifactName: sprint04
 
 stages:
   - stage: CriarInfra
@@ -63,5 +63,5 @@ stages:
               azureSubscription: 'MyAzureSubscription'
               appType: webAppLinux
               appName: $(appName)
-              package: '$(System.ArtifactsDirectory)/$(artifactName)/sprint03-0.0.1-SNAPSHOT.jar'
+              package: '$(System.ArtifactsDirectory)/$(artifactName)/sprint04-0.0.1-SNAPSHOT.jar'
 
