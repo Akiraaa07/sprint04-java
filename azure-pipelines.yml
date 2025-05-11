@@ -22,15 +22,7 @@ stages:
     jobs:
       - job: infraestrutura
         steps:
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: 'MyAzureSubscription'
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
-                az group create --name $(resourceGroup) --location $(location)
-                az appservice plan create --name $(servicePlan) --resource-group $(resourceGroup) --sku FREE --is-linux
-                # az webapp create --> Removido pois já foi criado
+          - script: echo "Infraestrutura já provisionada manualmente. Nenhuma ação necessária aqui."
 
   - stage: Build
     dependsOn: CriarInfra
