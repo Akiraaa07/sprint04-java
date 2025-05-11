@@ -63,4 +63,5 @@ stages:
               azureSubscription: 'MyAzureSubscription'
               appType: webAppLinux
               appName: $(appName)
-              package: '$(System.ArtifactsDirectory)/$(artifactName)/*.jar'
+              package: '$(System.ArtifactsDirectory)/$(artifactName)/sprint03-0.0.1-SNAPSHOT.jar'
+
