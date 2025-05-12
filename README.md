@@ -1,19 +1,38 @@
-# Sprint 4 - OdontoPrev (Java + Spring Boot + CI/CD Azure)
+# 🚀 Sprint 4 - OdontoPrev (Java + Spring Boot + MongoDB + Azure DevOps)
 
-Este repositório contém a solução completa para a Sprint 4, com foco em deploy automatizado via Azure DevOps, persistência de dados em banco SQL na nuvem e aplicação funcional hospedada no Azure App Service.
+Este repositório contém a solução completa para a Sprint 4 do projeto OdontoPrev, com foco em:
+
+- Deploy automatizado no Azure App Service via Azure DevOps
+- Persistência de dados com MongoDB Atlas (nuvem)
+- Front-end com Thymeleaf
+- Integração contínua e entrega contínua (CI/CD)
+
+---
 
 ## ✅ Funcionalidades implementadas
 
 - Aplicação Java com Spring Boot 3.4.3
-- Persistência com Spring Data JPA
-- Conexão com **Azure SQL Database**
-- Front-end com Thymeleaf
-- Deploy automatizado com **Azure DevOps Pipelines**
-- Ambiente de produção no **Azure App Service (Linux, Java 17)**
+- Persistência com **Spring Data MongoDB**
+- Conexão com banco de dados **MongoDB Atlas (cloud)**
+- Front-end com Thymeleaf e Bootstrap
+- CI/CD com Azure DevOps Pipelines
+- Aplicação publicada no **Azure App Service (Java 17 / Linux)**
 
 ---
 
-## 🚀 Como testar o projeto
+## 🧠 Tecnologias utilizadas
+
+- Java 17
+- Spring Boot 3.4.3
+- Spring Data MongoDB
+- Thymeleaf
+- MongoDB Atlas
+- Azure DevOps (Pipelines, App Service)
+- Gradle
+
+---
+
+## 📦 Como executar localmente
 
 ### 1. Clonar o repositório
 

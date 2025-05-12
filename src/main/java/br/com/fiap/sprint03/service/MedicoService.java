@@ -38,11 +38,11 @@ public class MedicoService {
         return toDTO(medicoRepository.save(medico));
     }
 
-    public Optional<MedicoDTO> buscarPorId(Long id) {
+    public Optional<MedicoDTO> buscarPorId(String id) {
         return medicoRepository.findById(id).map(this::toDTO);
     }
 
-    public void excluir(Long id) {
+    public void excluir(String id) {
         if (!medicoRepository.existsById(id)) {
             throw new RuntimeException("Médico não encontrado para exclusão");
         }
@@ -56,5 +56,4 @@ public class MedicoService {
         Medico medico = toEntity(medicoDTO);
         return toDTO(medicoRepository.save(medico));
     }
-
 }

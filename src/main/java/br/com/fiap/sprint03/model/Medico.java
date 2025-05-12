@@ -1,19 +1,18 @@
 package br.com.fiap.sprint03.model;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
-@Entity
+@Document(collection = "medicos")
 @Validated
 public class Medico {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_medico")
-    private Long id;
+    private String id;
 
     @NotNull
     private String nome;
@@ -30,11 +29,9 @@ public class Medico {
     @Size(min = 5, max = 15, message = "CRM deve ter entre 5 e 15 caracteres.")
     private String crm;
 
-    // Construtor padrão
     public Medico() {}
 
-    // Construtor com todos os atributos, exceto o id (já gerado automaticamente)
-    public Medico(Long id, String nome, String telefone, String email, String crm) {
+    public Medico(String id, String nome, String telefone, String email, String crm) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -42,12 +39,11 @@ public class Medico {
         this.crm = crm;
     }
 
-    // Getters e setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -83,4 +79,3 @@ public class Medico {
         this.crm = crm;
     }
 }
-

@@ -38,11 +38,11 @@ public class PacienteService {
         return toDTO(pacienteRepository.save(paciente));
     }
 
-    public Optional<PacienteDTO> buscarPorId(Long id) {
+    public Optional<PacienteDTO> buscarPorId(String id) {
         return pacienteRepository.findById(id).map(this::toDTO);
     }
 
-    public void excluir(Long id) {
+    public void excluir(String id) {
         if (!pacienteRepository.existsById(id)) {
             throw new RuntimeException("Paciente não encontrado para exclusão");
         }

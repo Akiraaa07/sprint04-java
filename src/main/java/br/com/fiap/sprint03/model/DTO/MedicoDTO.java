@@ -1,7 +1,7 @@
 package br.com.fiap.sprint03.model.DTO;
 
 public class MedicoDTO {
-    private Long id;
+    private String id;
     private String nome;
     private String telefone;
     private String email;
@@ -9,7 +9,7 @@ public class MedicoDTO {
 
     public MedicoDTO() {}
 
-    public MedicoDTO(Long id, String nome, String telefone, String email, String crm) {
+    public MedicoDTO(String id, String nome, String telefone, String email, String crm) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -17,9 +17,8 @@ public class MedicoDTO {
         this.crm = crm;
     }
 
-    // Getters e Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }

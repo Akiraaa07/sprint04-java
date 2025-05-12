@@ -1,23 +1,20 @@
 package br.com.fiap.sprint03.model;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-@Entity
+@Document(collection = "pacientes")
 @Validated
 public class Paciente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_paciente")
-    private Long id;
+    private String id;
 
     @NotNull
     private String nome;
@@ -31,10 +28,9 @@ public class Paciente {
     private String email;
 
     @NotNull
-    @Column(name = "data_nascimento")
     private LocalDate dataDeNascimento;
 
-    public Paciente(Long id, String nome, String telefone, String email, LocalDate dataDeNascimento) {
+    public Paciente(String id, String nome, String telefone, String email, LocalDate dataDeNascimento) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -44,11 +40,11 @@ public class Paciente {
 
     public Paciente() {}
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -84,4 +80,3 @@ public class Paciente {
         this.dataDeNascimento = dataDeNascimento;
     }
 }
-

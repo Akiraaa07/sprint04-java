@@ -1,9 +1,6 @@
 package br.com.fiap.sprint03.controller;
 
 import br.com.fiap.sprint03.model.DTO.PacienteDTO;
-import br.com.fiap.sprint03.model.Medico;
-import br.com.fiap.sprint03.model.Paciente;
-import br.com.fiap.sprint03.service.MedicoService;
 import br.com.fiap.sprint03.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/pacientes")
@@ -34,7 +30,7 @@ public class PacienteController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editarPaciente(@PathVariable Long id, Model model) {
+    public String editarPaciente(@PathVariable String id, Model model) {
         PacienteDTO pacienteDTO = pacienteService.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Paciente não encontrado"));
         model.addAttribute("pacienteDTO", pacienteDTO);
@@ -52,7 +48,7 @@ public class PacienteController {
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluirPaciente(@PathVariable Long id) {
+    public String excluirPaciente(@PathVariable String id) {
         pacienteService.excluir(id);
         return "redirect:/pacientes";
     }

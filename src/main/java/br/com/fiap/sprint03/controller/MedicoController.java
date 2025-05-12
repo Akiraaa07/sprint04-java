@@ -1,6 +1,6 @@
 package br.com.fiap.sprint03.controller;
 
-import br.com.fiap.sprint03.model.DTO.*;
+import br.com.fiap.sprint03.model.DTO.MedicoDTO;
 import br.com.fiap.sprint03.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/medicos")
@@ -20,13 +19,13 @@ public class MedicoController {
     @GetMapping
     public String listarMedicos(Model model) {
         List<MedicoDTO> medicos = medicoService.listarTodos();
-        model.addAttribute("medicos", medicos); // 🔥 Alterado para lista de DTOs
+        model.addAttribute("medicos", medicos);
         return "medicos/listar";
     }
 
     @GetMapping("/novo")
     public String exibirFormulario(Model model) {
-        model.addAttribute("medicoDTO", new MedicoDTO()); // 🔥 Alterado para MedicoDTO
+        model.addAttribute("medicoDTO", new MedicoDTO());
         return "medicos/form";
     }
 
@@ -41,17 +40,16 @@ public class MedicoController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editarMedico(@PathVariable Long id, Model model) {
+    public String editarMedico(@PathVariable String id, Model model) {
         MedicoDTO medicoDTO = medicoService.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Médico não encontrado"));
-        model.addAttribute("medicoDTO", medicoDTO); // 🔥 Alterado para MedicoDTO
+        model.addAttribute("medicoDTO", medicoDTO);
         return "medicos/form";
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluirMedico(@PathVariable Long id) {
+    public String excluirMedico(@PathVariable String id) {
         medicoService.excluir(id);
         return "redirect:/medicos";
     }
 }
-
