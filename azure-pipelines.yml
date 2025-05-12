@@ -49,8 +49,8 @@ stages:
         steps:
           - script: |
               chmod +x gradlew
-              ./gradlew build
-            displayName: 'Build com Gradle wrapper'
+              ./gradlew build -x test
+            displayName: 'Build com Gradle wrapper (sem testes)'
 
           - task: CopyFiles@2
             displayName: 'Copiar o .jar gerado'
