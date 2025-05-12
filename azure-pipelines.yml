@@ -12,7 +12,7 @@ variables:
   rm: rm554227
   resourceGroup: rg-webapp-sprint4
   servicePlan: plan-webapp-sprint4
-  appName: webapp-sprint4
+  appName: webapp-sprint4-linux
   location: eastus2
   runtime: JAVA:17-java17
   artifactName: sprint04
@@ -64,4 +64,3 @@ stages:
               appType: webAppLinux
               appName: $(appName)
               package: '$(System.ArtifactsDirectory)/$(artifactName)/sprint04-0.0.1-SNAPSHOT.jar'
-
