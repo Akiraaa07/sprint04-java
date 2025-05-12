@@ -29,16 +29,10 @@ stages:
     jobs:
       - job: build
         steps:
-          - script: chmod +x gradlew
-            displayName: 'Permissão de execução ao gradlew'
-
-          - task: Gradle@3
-            inputs:
-              gradleWrapperFile: 'gradlew'
-              tasks: 'build'
-              javaHomeOption: 'JDKVersion'
-              jdkVersionOption: '1.17'
-              publishJUnitResults: false
+          - script: |
+              chmod +x gradlew
+              ./gradlew build
+            displayName: 'Build com Gradle wrapper'
 
           - task: CopyFiles@2
             inputs:
