@@ -64,7 +64,7 @@ stages:
             displayName: 'Publicar artefato do Build'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: $(nome-artefato)
+              ArtifactName: 'drop'
 
   - stage: DeployApp
     jobs:
@@ -83,4 +83,4 @@ stages:
               azureSubscription: 'MyAzureSubscription'
               appType: 'webAppLinux'
               WebAppName: $(app-name)
-              packageForLinux: '$(System.DefaultWorkingDirectory)/$(nome-artefato)/*.jar'
+              packageForLinux: '$(System.DefaultWorkingDirectory)/drop/*.jar'
