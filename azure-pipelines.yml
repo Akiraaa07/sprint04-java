@@ -31,7 +31,7 @@ stages:
         steps:
           - script: |
               chmod +x gradlew
-              ./gradlew build
+              ./gradlew build --stacktrace --info
             displayName: 'Build com Gradle wrapper'
 
           - task: CopyFiles@2
