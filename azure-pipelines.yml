@@ -41,7 +41,6 @@ stages:
                 az group create --location $(location) --name $(resourceGroup)
                 az appservice plan create -g $(resourceGroup) -n $(service-plan) --is-linux --sku $(sku)
                 az webapp create -g $(resourceGroup) -p $(service-plan) -n $(app-name) --runtime "$(runtime)"
-            visibleAzLogin: false
 
   - stage: BuildApp
     jobs:
