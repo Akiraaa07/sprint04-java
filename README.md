@@ -1,29 +1,22 @@
-# 🦷 Sprint 4 - OdontoPrev Java + Azure
+# Sprint 4 - OdontoPrev (Java + Spring Boot + CI/CD Azure)
 
-Este projeto consiste em uma aplicação Java com Spring Boot para gerenciamento de pacientes e médicos, com conexão ao banco de dados SQL Server hospedado na Azure e deploy automático via Azure DevOps (CI/CD).
+Este repositório contém a solução completa para a Sprint 4, com foco em deploy automatizado via Azure DevOps, persistência de dados em banco SQL na nuvem e aplicação funcional hospedada no Azure App Service.
 
----
+## ✅ Funcionalidades implementadas
 
-## 🚀 Tecnologias
-
-- Java 17
-- Spring Boot 3.4.3
-- Gradle
-- SQL Server na Azure
-- Azure App Service (Linux)
-- Azure DevOps (CI/CD Pipeline)
+- Aplicação Java com Spring Boot 3.4.3
+- Persistência com Spring Data JPA
+- Conexão com **Azure SQL Database**
+- Front-end com Thymeleaf
+- Deploy automatizado com **Azure DevOps Pipelines**
+- Ambiente de produção no **Azure App Service (Linux, Java 17)**
 
 ---
 
-## ⚙️ Como rodar o projeto localmente
+## 🚀 Como testar o projeto
 
-1. **Pré-requisitos:**
-   - JDK 17+
-   - Gradle (ou `./gradlew`)
-   - Internet (para conectar ao banco na Azure)
-
-2. **Clonar o repositório**
+### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/Akiraaa07/sprint04-java.git
+git clone https://github.com/seu-usuario/sprint04-java.git
 cd sprint04-java
