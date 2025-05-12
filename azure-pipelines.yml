@@ -3,67 +3,84 @@ trigger:
     include:
       - main
       - master
-      - release
+      - minharelease
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  rm: rm554227
-  resourceGroup: rg-webapp-sprint4
-  servicePlan: plan-webapp-sprint4
-  appName: webapp-sprint4-linux
-  location: eastus2
-  runtime: JAVA:17-java17
-  artifactName: sprint04
+  - name: rm
+    value: rm9999
+  - name: location
+    value: eastus
+  - name: resourceGroup
+    value: rg-pet-clinic
+  - name: service-plan
+    value: planPetClinic
+  - name: app-name
+    value: pet-clinic-$(rm)
+  - name: runtime
+    value: JAVA:17-java17
+  - name: sku
+    value: F1
+  - name: nome-artefato
+    value: petclinic
 
 stages:
   - stage: CriarInfra
     jobs:
-      - job: infraestrutura
+      - job: criaWebApp
+        displayName: Criar ou atualizar o Serviço de Aplicativo
         steps:
-          - script: echo "Infraestrutura já provisionada manualmente. Nenhuma ação necessária aqui."
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'MyAzureSubscription'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az group create --location $(location) --name $(resourceGroup)
+                az appservice plan create -g $(resourceGroup) -n $(service-plan) --is-linux --sku $(sku)
+                az webapp create -g $(resourceGroup) -p $(service-plan) -n $(app-name) --runtime "$(runtime)"
+            visibleAzLogin: false
 
-  - stage: Build
-    dependsOn: CriarInfra
+  - stage: BuildApp
     jobs:
-      - job: build
+      - job: buildWebApp
+        displayName: Realizar o Build do App com Gradle
         steps:
           - script: |
               chmod +x gradlew
-              ./gradlew build --stacktrace --info
+              ./gradlew build
             displayName: 'Build com Gradle wrapper'
 
           - task: CopyFiles@2
+            displayName: 'Copiar o .jar gerado'
             inputs:
               SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
               Contents: '*.jar'
               TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
           - task: PublishBuildArtifacts@1
+            displayName: 'Publicar artefato do Build'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: $(artifactName)
+              ArtifactName: $(nome-artefato)
 
-  - stage: Deploy
-    dependsOn: Build
+  - stage: DeployApp
     jobs:
-      - job: deploy
+      - job: DeployWebApp
+        displayName: Deploy no Serviço de Aplicativo
         steps:
           - task: DownloadBuildArtifacts@1
+            displayName: 'Baixar artefato gerado'
             inputs:
-              buildType: current
-              downloadPath: '$(System.ArtifactsDirectory)'
+              buildType: 'current'
+              downloadPath: '$(System.DefaultWorkingDirectory)'
 
-          - task: CopyFiles@2
-            inputs:
-              SourceFolder: '$(System.ArtifactsDirectory)/$(artifactName)'
-              Contents: '*.jar'
-              TargetFolder: '$(System.DefaultWorkingDirectory)'
-
-          - task: AzureWebApp@1
+          - task: AzureRmWebAppDeployment@4
+            displayName: 'Deploy com Gradle .jar'
             inputs:
               azureSubscription: 'MyAzureSubscription'
-              appType: webAppLinux
-              appName: $(appName)
-              package: '$(System.DefaultWorkingDirectory)/sprint04-0.0.1-SNAPSHOT.jar'
+              appType: 'webAppLinux'
+              WebAppName: $(app-name)
+              packageForLinux: '$(System.DefaultWorkingDirectory)/$(nome-artefato)/*.jar'
