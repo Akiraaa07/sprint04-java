@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'maven-publish'
 }
 
 group = 'br.com.fiap'
@@ -33,28 +32,10 @@ tasks.named('test') {
 
 bootJar {
     archiveFileName = 'sprint04-0.0.1-SNAPSHOT.jar'
-    mainClass.set('br.com.fiap.sprint03.Sprint04Application') // ✅ Define a classe principal explicitamente
+    mainClass.set('br.com.fiap.sprint03.Sprint04Application') // mantém assim mesmo
     enabled = true
 }
 
 jar {
     enabled = false
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Nicola3423/sprint03-java")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN")
-            }
-        }
-    }
 }

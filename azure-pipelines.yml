@@ -58,9 +58,15 @@ stages:
               buildType: current
               downloadPath: '$(System.ArtifactsDirectory)'
 
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(System.ArtifactsDirectory)/$(artifactName)'
+              Contents: '*.jar'
+              TargetFolder: '$(System.DefaultWorkingDirectory)'
+
           - task: AzureWebApp@1
             inputs:
               azureSubscription: 'MyAzureSubscription'
               appType: webAppLinux
               appName: $(appName)
-              package: '$(System.ArtifactsDirectory)/$(artifactName)/sprint04-0.0.1-SNAPSHOT.jar'
+              package: '$(System.DefaultWorkingDirectory)/sprint04-0.0.1-SNAPSHOT.jar'
