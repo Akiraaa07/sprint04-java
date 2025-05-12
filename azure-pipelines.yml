@@ -10,21 +10,21 @@ pool:
 
 variables:
   - name: rm
-    value: rm9999
+    value: rm554227
   - name: location
     value: eastus
   - name: resourceGroup
-    value: rg-pet-clinic
+    value: rg-odontoprev
   - name: service-plan
-    value: planPetClinic
+    value: plan-odontoprev
   - name: app-name
-    value: pet-clinic-$(rm)
+    value: odontoprev-$(rm)
   - name: runtime
     value: JAVA:17-java17
   - name: sku
     value: F1
   - name: nome-artefato
-    value: petclinic
+    value: odontoprev
 
 stages:
   - stage: CriarInfra
@@ -34,7 +34,7 @@ stages:
         steps:
           - task: AzureCLI@2
             inputs:
-              azureSubscription: 'MyAzureSubscription'
+              azureSubscription: 'MyAzureSubscription'  # Troque pelo nome da conexão real no DevOps
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
