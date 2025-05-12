@@ -29,6 +29,9 @@ stages:
     jobs:
       - job: build
         steps:
+          - script: chmod +x gradlew
+            displayName: 'Permissão de execução ao gradlew'
+
           - task: Gradle@3
             inputs:
               gradleWrapperFile: 'gradlew'
