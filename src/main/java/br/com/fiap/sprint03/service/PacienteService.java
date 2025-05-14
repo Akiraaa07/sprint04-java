@@ -1,3 +1,4 @@
+
 package br.com.fiap.sprint03.service;
 
 import br.com.fiap.sprint03.model.DTO.PacienteDTO;
@@ -16,14 +17,14 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    // Converte de Paciente -> PacienteDTO
     private PacienteDTO toDTO(Paciente paciente) {
-        return new PacienteDTO(paciente.getId(), paciente.getNome(), paciente.getTelefone(), paciente.getEmail(), paciente.getDataDeNascimento());
+        return new PacienteDTO(paciente.getId(), paciente.getNome(), paciente.getTelefone(),
+                paciente.getEmail(), paciente.getDataDeNascimento());
     }
 
-    // Converte de PacienteDTO -> Paciente
     private Paciente toEntity(PacienteDTO dto) {
-        return new Paciente(dto.getId(), dto.getNome(), dto.getTelefone(), dto.getEmail(), dto.getDataDeNascimento());
+        return new Paciente(dto.getId(), dto.getNome(), dto.getTelefone(),
+                dto.getEmail(), dto.getDataDeNascimento());
     }
 
     public List<PacienteDTO> listarTodos() {
@@ -34,6 +35,9 @@ public class PacienteService {
     }
 
     public PacienteDTO salvar(PacienteDTO pacienteDTO) {
+        if (pacienteDTO.getId() != null && pacienteDTO.getId().isBlank()) {
+            pacienteDTO.setId(null);
+        }
         Paciente paciente = toEntity(pacienteDTO);
         return toDTO(pacienteRepository.save(paciente));
     }

@@ -1,3 +1,4 @@
+
 package br.com.fiap.sprint03.controller;
 
 import br.com.fiap.sprint03.model.DTO.MedicoDTO;
@@ -31,11 +32,18 @@ public class MedicoController {
 
     @PostMapping("/salvar")
     public String salvarMedico(@ModelAttribute("medicoDTO") MedicoDTO medicoDTO) {
-        if (medicoDTO.getId() == null) {
-            medicoService.salvar(medicoDTO);
-        } else {
-            medicoService.atualizar(medicoDTO);
+        try {
+            // Corrigido: garantir que só atualiza se o ID não for nulo e não for vazio
+            if (medicoDTO.getId() == null || medicoDTO.getId().isBlank()) {
+                medicoService.salvar(medicoDTO);
+            } else {
+                medicoService.atualizar(medicoDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // loga o erro no console
+            throw new RuntimeException("Erro ao salvar médico: " + e.getMessage());
         }
+
         return "redirect:/medicos";
     }
 

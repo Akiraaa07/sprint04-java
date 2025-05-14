@@ -1,3 +1,4 @@
+
 package br.com.fiap.sprint03.controller;
 
 import br.com.fiap.sprint03.model.DTO.PacienteDTO;
@@ -39,7 +40,7 @@ public class PacienteController {
 
     @PostMapping("/salvar")
     public String salvarPaciente(@ModelAttribute("pacienteDTO") PacienteDTO pacienteDTO) {
-        if (pacienteDTO.getId() == null) {
+        if (pacienteDTO.getId() == null || pacienteDTO.getId().isBlank()) {
             pacienteService.salvar(pacienteDTO);
         } else {
             pacienteService.atualizar(pacienteDTO);

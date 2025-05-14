@@ -1,3 +1,4 @@
+
 package br.com.fiap.sprint03.service;
 
 import br.com.fiap.sprint03.model.DTO.MedicoDTO;
@@ -27,6 +28,7 @@ public class MedicoService {
     }
 
     public List<MedicoDTO> listarTodos() {
+        System.out.println("Listando todos os médicos...");
         return medicoRepository.findAll()
                 .stream()
                 .map(this::toDTO)
@@ -34,15 +36,33 @@ public class MedicoService {
     }
 
     public MedicoDTO salvar(MedicoDTO medicoDTO) {
+        System.out.println(">>> Tentando salvar médico:");
+        System.out.println("ID: " + medicoDTO.getId());
+        System.out.println("Nome: " + medicoDTO.getNome());
+        System.out.println("Telefone: " + medicoDTO.getTelefone());
+        System.out.println("Email: " + medicoDTO.getEmail());
+        System.out.println("CRM: " + medicoDTO.getCrm());
+
+        // Corrigido: se o ID estiver vazio, anula para deixar o Mongo gerar um novo
+        if (medicoDTO.getId() != null && medicoDTO.getId().isBlank()) {
+            medicoDTO.setId(null);
+        }
+
         Medico medico = toEntity(medicoDTO);
-        return toDTO(medicoRepository.save(medico));
+        Medico salvo = medicoRepository.save(medico);
+
+        System.out.println(">>> Médico salvo com ID: " + salvo.getId());
+
+        return toDTO(salvo);
     }
 
     public Optional<MedicoDTO> buscarPorId(String id) {
+        System.out.println("Buscando médico por ID: " + id);
         return medicoRepository.findById(id).map(this::toDTO);
     }
 
     public void excluir(String id) {
+        System.out.println("Excluindo médico com ID: " + id);
         if (!medicoRepository.existsById(id)) {
             throw new RuntimeException("Médico não encontrado para exclusão");
         }
@@ -50,6 +70,7 @@ public class MedicoService {
     }
 
     public MedicoDTO atualizar(MedicoDTO medicoDTO) {
+        System.out.println("Atualizando médico com ID: " + medicoDTO.getId());
         if (medicoDTO.getId() == null || !medicoRepository.existsById(medicoDTO.getId())) {
             throw new IllegalArgumentException("Médico não encontrado para atualização");
         }
