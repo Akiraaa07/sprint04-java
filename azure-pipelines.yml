@@ -55,7 +55,7 @@ stages:
           - task: CopyFiles@2
             displayName: 'Copiar o .jar gerado'
             inputs:
-              SourceFolder: '$(System.DefaultWorkingDirectory)/build/libs'
+              SourceFolder: '$(System.DefaultWorkingDirectory)/sprint04-java/build/libs'
               Contents: '*.jar'
               TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
