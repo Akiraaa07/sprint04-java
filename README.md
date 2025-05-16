@@ -28,7 +28,7 @@ git clone https://github.com/seu-usuario/sprint04-java.git
 ### 3. Conectar com Azure (uma vez):
 - Em *Project Settings > Service Connections* → criar uma conexão chamada:
   ```
-  ConexaoAzureFiap
+  MyazureSubscription
   ```
 
 ### 4. Executar a Pipeline
@@ -51,7 +51,6 @@ https://odontoprev-rm554227.azurewebsites.net/medicos
 ## 🌐 MongoDB Atlas
 - Banco: `odontoprevdb`
 - Coleções criadas automaticamente: `medicos`, `pacientes`
-- Relacionamento: cada paciente pode conter um campo de referência ao médico (opcional)
 
 ---
 
