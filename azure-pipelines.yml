@@ -34,7 +34,7 @@ stages:
         steps:
           - task: AzureCLI@2
             inputs:
-              azureSubscription: 'MyAzureSubscription'  # Troque pelo nome da conexão real no DevOps
+              azureSubscription: 'MyAzureSubscription'
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
